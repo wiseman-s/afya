@@ -565,7 +565,8 @@ elif page == "AI Assistant":
             db.add_chat_log(None, q, a)
         except Exception:
             pass
-        st.experimental_rerun()
+        st.rerun()
+
 
 # REPORTS
 elif page == "Reports":
