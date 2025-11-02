@@ -85,7 +85,6 @@ def mark_followup_done_db(followup_id):
 def add_anc_visit_fallback(mid, visit_date, bp_systolic, bp_diastolic, hb, weight, urine_protein, fetal_hr, fundal_height, symptoms, notes):
     # store detailed items in notes JSON-like string to avoid schema changes
     combined_notes = ""
-    
     if symptoms:
         combined_notes += f"Symptoms: {symptoms}\n"
     if urine_protein is not None:
@@ -93,19 +92,9 @@ def add_anc_visit_fallback(mid, visit_date, bp_systolic, bp_diastolic, hb, weigh
     if fetal_hr is not None:
         combined_notes += f"Fetal HR: {fetal_hr}\n"
     if fundal_height is not None:
-        combined_notes += f"Fundal Height: {fundal_height}\n"
+        combined_notes += f"Fundal height: {fundal_height}\n"
     if notes:
         combined_notes += f"Notes: {notes}\n"
-
-    db.add_anc_visit(mid, visit_date, bp_systolic, bp_diastolic, hb, weight, combined_notes)
-
-
-    if fundal_height is not None:
-        combined_notes += f"Fundal height: {fundal_height}
-"
-    if notes:
-        combined_notes += f"Notes: {notes}
-"
     # fallback insertion into anc_visits table (table created in db.init_db)
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
@@ -302,7 +291,7 @@ elif page == "Mother Profiles":
                     conn.commit()
                     conn.close()
                 st.success("Details updated.")
-                st.rerun()
+                st.experimental_rerun()
 
         # Delete with confirm two-step
         if "confirm_delete" not in st.session_state:
@@ -326,7 +315,7 @@ elif page == "Mother Profiles":
                         conn.close()
                     st.success("Mother deleted.")
                     st.session_state.confirm_delete = None
-                    st.rerun()
+                    st.experimental_rerun()
             with colc2:
                 if st.button("Cancel"):
                     st.session_state.confirm_delete = None
@@ -366,7 +355,7 @@ elif page == "ANC Visits":
             bp_dia = st.number_input("BP Diastolic", 40, 150, 80)
             hb = st.number_input("Haemoglobin (g/dL)", 5.0, 20.0, 11.0, format="%.1f")
             weight = st.number_input("Weight (kg)", 30.0, 200.0, 60.0, format="%.1f")
-            urine_protein = st.selectbox("Urine Protein", ["None","Trace","+1","+2","+3","+4"]) 
+            urine_protein = st.selectbox("Urine Protein", ["None","Trace","+1","+2","+3","+4"])
             fetal_hr = st.number_input("Fetal heart rate (bpm)", 80, 220, 140)
             fundal_height = st.number_input("Fundal height (cm)", 10.0, 50.0, 24.0, format="%.1f")
             symptoms = st.text_area("Symptoms (comma-separated)")
@@ -485,7 +474,7 @@ elif page == "Predictive Insights":
         st.subheader("Clinical Interpretation")
         st.write(f"**Category:** {r['risk']}")
         if r['reasons']:
-            st.write("**Contributing factors:")
+            st.write("**Contributing factors:**")
             for reason in r['reasons']:
                 st.write(f"- {reason}")
         st.markdown("**Suggested actions:**")
@@ -556,7 +545,7 @@ elif page == "Follow-ups":
                         else:
                             mark_followup_done_db(fu.get('id'))
                         st.success("Marked done.")
-                        st.rerun()
+                        st.experimental_rerun()
         else:
             st.info("No follow-ups scheduled.")
 
@@ -576,7 +565,7 @@ elif page == "AI Assistant":
             db.add_chat_log(None, q, a)
         except Exception:
             pass
-        st.rerun()
+        st.experimental_rerun()
 
 # REPORTS
 elif page == "Reports":
@@ -600,3 +589,4 @@ footer {visibility: hidden !important;}
 </style>
 """
 st.markdown(hide_footer, unsafe_allow_html=True)
+
