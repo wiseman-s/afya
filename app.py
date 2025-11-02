@@ -99,7 +99,7 @@ def add_anc_visit_fallback(mid, visit_date, bp_systolic, bp_diastolic, hb, weigh
 
     db.add_anc_visit(mid, visit_date, bp_systolic, bp_diastolic, hb, weight, combined_notes)
 
-"
+
     if fundal_height is not None:
         combined_notes += f"Fundal height: {fundal_height}
 "
