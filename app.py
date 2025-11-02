@@ -86,7 +86,7 @@ def add_anc_visit_fallback(mid, visit_date, bp_systolic, bp_diastolic, hb, weigh
     # store detailed items in notes JSON-like string to avoid schema changes
     combined_notes = ""
     if symptoms:
-        combined_notes += f"Symptoms: {symptoms}
+        combined_notes += f"Symptoms: {symptoms}" {symptoms}
 "
     if urine_protein is not None:
         combined_notes += f"Urine protein: {urine_protein}
