@@ -1,0 +1,7 @@
+streamlit==1.25.0
+pandas
+matplotlib
+scikit-learn
+fastapi
+uvicorn
+python-multipart
