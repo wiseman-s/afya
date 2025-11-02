@@ -85,14 +85,20 @@ def mark_followup_done_db(followup_id):
 def add_anc_visit_fallback(mid, visit_date, bp_systolic, bp_diastolic, hb, weight, urine_protein, fetal_hr, fundal_height, symptoms, notes):
     # store detailed items in notes JSON-like string to avoid schema changes
     combined_notes = ""
+    
     if symptoms:
-        combined_notes += f"Symptoms: {symptoms}" {symptoms}
-"
+        combined_notes += f"Symptoms: {symptoms}\n"
     if urine_protein is not None:
-        combined_notes += f"Urine protein: {urine_protein}
-"
+        combined_notes += f"Urine protein: {urine_protein}\n"
     if fetal_hr is not None:
-        combined_notes += f"Fetal HR: {fetal_hr}
+        combined_notes += f"Fetal HR: {fetal_hr}\n"
+    if fundal_height is not None:
+        combined_notes += f"Fundal Height: {fundal_height}\n"
+    if notes:
+        combined_notes += f"Notes: {notes}\n"
+
+    db.add_anc_visit(mid, visit_date, bp_systolic, bp_diastolic, hb, weight, combined_notes)
+
 "
     if fundal_height is not None:
         combined_notes += f"Fundal height: {fundal_height}
