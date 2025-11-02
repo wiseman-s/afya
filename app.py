@@ -291,7 +291,10 @@ elif page == "Mother Profiles":
                     conn.commit()
                     conn.close()
                 st.success("Details updated.")
-                st.experimental_rerun()
+                st.session_state['chat_started'] = False
+st.session_state['assistant_history'] = []
+st.session_state['assistant_responses'] = []
+
 
         # Delete with confirm two-step
         if "confirm_delete" not in st.session_state:
